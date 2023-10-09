@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Assets/icon.ico" type="image/x-icon">
+    <title>2x Predictor By Brutal</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #0c1b39;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .calculator {
+            text-align: center;
+            max-width: 400px;
+            padding: 20px;
+            background-color: rgba(27, 47, 58, 0.9);
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .calculator h1 {
+            font-size: 28px;
+            margin: 20px 0;
+            color: #007bff; /* Blue header text color */
+        }
+
+        input[type="password"],
+        input[type="number"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px;
+            border: 2px solid #007bff; /* Blue border color */
+            border-radius: 5px;
+            background-color: #181d2e; /* Dark background color */
+            color: #fff;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        p#result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .credit {
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1> 2x Predictor By Brutal</h1>
+        <input type="password" id="password" placeholder="Enter KEY">
+        <button onclick="activateCalculator()">ACTIVATE</button>
+        <div class="calculator-content">
+            <input type="number" id="firstOdd" placeholder="First Coefficient">
+            <input type="number" id="secondOdd" placeholder="Second Coefficient">
+            <button onclick="calculate()">Predict</button>
+            <button onclick="reset()">Reset</button>
+            <p id="result"></p>
+           
+        </div>
+    </div>
+    <script>
+        let isActivated = false;
+
+        function activateCalculator() {
+            const password = document.getElementById('password').value;
+            if (password === 'brutalop') {
+                isActivated = true;
+                document.querySelector('.calculator-content').style.display = 'block';
+                document.getElementById('password').disabled = true;
+            } else {
+                alert('Incorrect password. Please try again.');
+            }
+        }
+
+        function calculate() {
+            if (!isActivated) {
+                alert('Please activate the calculator with the correct password.');
+                return;
+            }
+
+            const firstOdd = parseFloat(document.getElementById('firstOdd').value);
+            const secondOdd = parseFloat(document.getElementById('secondOdd').value);
+
+            if (isNaN(firstOdd) || isNaN(secondOdd)) {
+                alert('Please enter valid odds.');
+                return;
+            }
+
+            let predictedOdd;
+
+            if (firstOdd < 2 && secondOdd > 2) {
+                predictedOdd = (firstOdd + secondOdd) / 2 * 1.2;
+            } else if (firstOdd > 2 && secondOdd < 2) {
+                predictedOdd = (firstOdd - secondOdd) / 2 * 1.2;
+            }
+
+            const resultElement = document.getElementById('result');
+
+            if (predictedOdd > 2) {
+                resultElement.innerHTML = '<p>Auto Cashout 2x</p>';
+            } else if (predictedOdd < 2 && predictedOdd >= 1.5) {
+                resultElement.innerHTML = '<p>Don�t Bet!</p>';
+            } else {
+                resultElement.innerHTML = 'Auto Cashout 1.30x';
+            }
+        }
+
+        function reset() {
+            document.getElementById('firstOdd').value = '';
+            document.getElementById('secondOdd').value = '';
+            document.getElementById('result').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
